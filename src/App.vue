@@ -1,5 +1,16 @@
 <script>
 import DateForm from './components/date-form.vue'
+
+const changeDateFormat = (date) => {
+  const dateForFormate = date ? date : new Date();
+  return [dateForFormate.getFullYear(), dateForFormate.getMonth() + 1, dateForFormate.getDate()]
+    .map(n => n < 10 ? `0${n}` : `${n}`).join('/');
+};
+
+const checkCurrentDay = (data) => {
+  return data.find(d => d.date === changeDateFormat());
+};
+
 export default {
   name: 'App',
   components: {
@@ -11,7 +22,22 @@ export default {
       time: null,
       date: null,
       dayOfWeek: null,
-      model: null
+      model: null,
+      data: null,
+      backgroundColor: null
+    }
+  },
+  methods: {
+  },
+  mounted () {
+    try {
+      this.data = window.myAPI.readData();
+      const currentDay = checkCurrentDay(this.data);
+      if (currentDay) {
+        this.backgroundColor = currentDay.color.toString();
+      }
+    } catch (error) {
+      console.log(`Error: ${error}`)
     }
   },
   beforeUnmount() {
@@ -38,7 +64,7 @@ export default {
 </script>
 
 <template>
-  <div id="q-app" class="column content-center justify-center relative-position">
+  <div id="q-app" :class="{ green: this.backgroundColor === 'green', red: this.backgroundColor === 'red' }">
     <q-card class="my-card column content-center">
       <q-card-section class="text-center">
         {{time}}
@@ -55,7 +81,7 @@ export default {
         anchor="top left"
         self="top right"
       >
-        <date-form></date-form>
+        <date-form :data="data"></date-form>
       </q-menu>
     </q-btn>
   </div>

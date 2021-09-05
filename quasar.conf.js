@@ -12,6 +12,10 @@ const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
   return {
+    sourceFiles: {
+      electronMain: 'src-electron/electron-main',
+      electronPreload: 'src-electron/electron-preload'
+    },
     // https://v2.quasar.dev/quasar-cli/supporting-ts
     supportTS: false,
 
@@ -93,7 +97,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Notify']
     },
 
     // animations: 'all', // --- includes all animations
@@ -186,7 +190,7 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/developing-electron-apps/configuring-electron
     electron: {
-      bundler: 'packager', // 'packager' or 'builder'
+      bundler: 'builder', // 'packager' or 'builder'
 
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
@@ -206,6 +210,8 @@ module.exports = configure(function (ctx) {
 
         appId: 'colors'
       },
+
+      nodeIntegration: true,
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       chainWebpackMain (chain) {

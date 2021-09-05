@@ -2,12 +2,34 @@
 
 body {
   box-sizing: border-box;
-  width: 100vh;
   height: 100vh;
 }
 
 #q-app {
+  position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: $grey-8;
+}
+
+.red {
+  background-color: red !important;
+}
+
+.green {
+  background-color: green !important;
+}
+
+.my-card {
+  width: max-content;
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: white;
+  font-size: 80px;
+  font-weight: 600;
 }

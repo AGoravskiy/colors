@@ -1,6 +1,6 @@
 import { app, BrowserWindow, nativeTheme } from 'electron'
 import path from 'path'
-
+const fs = require('fs')
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
     require('fs').unlinkSync(require('path').join(app.getPath('userData'), 'DevTools Extensions'))
@@ -19,7 +19,6 @@ function createWindow () {
     useContentSize: true,
     webPreferences: {
       contextIsolation: true,
-      // More info: /quasar-cli/developing-electron-apps/electron-preload-script
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD)
     }
   })
